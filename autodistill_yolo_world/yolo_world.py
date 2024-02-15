@@ -1,12 +1,12 @@
+import json
 import os
 from dataclasses import dataclass
-import json
+
 import numpy as np
 import supervision as sv
 import torch
-from ultralytics import YOLOWorld
 from autodistill.detection import CaptionOntology, DetectionBaseModel
-from autodistill.helpers import load_image
+from ultralytics import YOLOWorld
 
 HOME = os.path.expanduser("~")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -32,8 +32,7 @@ class YoloWorld(DetectionBaseModel):
             for output in outputs:
                 if output["confidence"] > confidence:
                     box = output["box"]
-                    boxes.append([box[key]
-                                 for key in ("x1", "y1", "x2", "y2")])
+                    boxes.append([box[key] for key in ("x1", "y1", "x2", "y2")])
                     labels.append(output["class"])
                     scores.append(output["confidence"])
 

@@ -1,6 +1,8 @@
-from autodistill_yolo_world.yolo_world import YoloWorld
-from autodistill.detection import CaptionOntology
 import os
+
+from autodistill.detection import CaptionOntology
+
+from autodistill_yolo_world.yolo_world import YoloWorld
 
 
 def test_YoloWorld():
