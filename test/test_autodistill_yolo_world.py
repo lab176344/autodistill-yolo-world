@@ -6,5 +6,8 @@ import os
 def test_YoloWorld():
     caption_ontology = CaptionOntology({"person": "person", "car": "car"})
     yolo_world = YoloWorld(ontology=caption_ontology)
-    input_image = os.join("assets", "test.jpg")
-    yolo_world.predict(input_image)
+    input_image = os.path.join("assets", "test.jpg")
+    detections = yolo_world.predict(input_image)
+    assert len(detections.xyxy) == 8
+    assert len(detections.class_id) == 8
+    assert len(detections.confidence) == 8

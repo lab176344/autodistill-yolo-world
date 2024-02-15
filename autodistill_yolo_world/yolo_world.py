@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass
-
+import json
 import numpy as np
 import supervision as sv
 import torch
@@ -18,30 +18,24 @@ class YoloWorld(DetectionBaseModel):
 
     def __init__(self, ontology: CaptionOntology, model_type: str = "yolov8s-world.pt"):
         self.ontology = ontology
-        self.standard_model = YOLOWorld(model_type)
-        labels = self.ontology.prompts()
-        self.standard_model.set_classes(labels)
-        # save the model for later use
-
-    def predict(self, input: str, confidence=0.1) -> sv.Detections:
+        self.model = YOLOWorld(model_type)
         labels = self.ontology.prompts()
         self.model.set_classes(labels)
 
+    def predict(self, input: str, confidence=0.1) -> sv.Detections:
         with torch.no_grad():
-
             outputs = self.model(input)
-
-            for result in outputs:
-                boxes = result.boxes
-                scores = result.probs
-                labels = result.labels
-
+            # 0 as there is only one image
+            outputs = json.loads(outputs[0].tojson())
+            boxes, labels, scores = [], [], []
             # filter with score < confidence
-            boxes = [box for box, score in zip(
-                boxes, scores) if score > confidence]
-            labels = [label for label, score in zip(
-                labels, scores) if score > confidence]
-            scores = [score for score in scores if score > confidence]
+            for output in outputs:
+                if output["confidence"] > confidence:
+                    box = output["box"]
+                    boxes.append([box[key]
+                                 for key in ("x1", "y1", "x2", "y2")])
+                    labels.append(output["class"])
+                    scores.append(output["confidence"])
 
             if len(boxes) == 0:
                 return sv.Detections.empty()
