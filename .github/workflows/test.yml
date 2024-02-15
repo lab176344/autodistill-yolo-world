@@ -1,6 +1,7 @@
 name: Test WorkFlow
 
 on:
+  push:
   pull_request:
     branches: [main]
 
