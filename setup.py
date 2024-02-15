@@ -5,8 +5,8 @@ import re
 with open("./autodistill_yolo_world/__init__.py", 'r') as f:
     content = f.read()
     # from https://www.py4u.net/discuss/139845
-    version = re.search(
-        r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', content).group(1)
+    match = re.search(r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]', content)
+    version = match.group(1) if match else None
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
