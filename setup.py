@@ -2,7 +2,7 @@ import setuptools
 from setuptools import find_packages
 import re
 
-with open("./autodistill_owl_vit/__init__.py", 'r') as f:
+with open("./autodistill_yolo_world/__init__.py", 'r') as f:
     content = f.read()
     # from https://www.py4u.net/discuss/139845
     version = re.search(
@@ -24,7 +24,7 @@ setuptools.setup(
         "torch",
         "supervision",
         "numpy",
-        "transformers"
+        "ultralytics"
     ],
     packages=find_packages(exclude=("tests",)),
     extras_require={
