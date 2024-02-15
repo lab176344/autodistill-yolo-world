@@ -16,9 +16,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class YoloWorld(DetectionBaseModel):
     ontology: CaptionOntology
 
-    def __init__(self,
-                 ontology: CaptionOntology,
-                 model_type: str = "yolov8s-world.pt"):
+    def __init__(self, ontology: CaptionOntology, model_type: str = "yolov8s-world.pt"):
         self.ontology = ontology
         self.model = YOLOWorld(model_type)
         labels = self.ontology.prompts()
@@ -34,8 +32,7 @@ class YoloWorld(DetectionBaseModel):
             for output in outputs:
                 if output["confidence"] > confidence:
                     box = output["box"]
-                    boxes.append([box[key]
-                                 for key in ("x1", "y1", "x2", "y2")])
+                    boxes.append([box[key] for key in ("x1", "y1", "x2", "y2")])
                     labels.append(output["class"])
                     scores.append(output["confidence"])
 
