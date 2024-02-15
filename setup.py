@@ -22,7 +22,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/lakshmanmoiiai/autodistill-yolo-world",
-    install_requires=["torch", "supervision", "numpy", "ultralytics"],
+    install_requires=["torch", "supervision",
+                      "numpy", "ultralytics", "autodistill"],
     packages=find_packages(exclude=("tests",)),
     extras_require={
         "dev": ["flake8", "black==22.3.0", "isort", "twine", "pytest", "wheel"],
