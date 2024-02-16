@@ -1,15 +1,15 @@
-name: Test WorkFlow
+name: Publish WorkFlow
 
 on:
-  pull_request:
-    branches: [main]
+  release:
+    types: [created]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9,3.11]
+        python-version: [3.9]
     steps:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3
@@ -23,8 +23,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install ".[dev]"
-      - name: 🧹 Lint with flake8
+      - name: 🚀 Publish to PyPi
+        env: 
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          PYPI_TEST_PASSWORD: ${{ secrets.PYPI_TEST_PASSWORD }}
         run: |
-          make check_code_quality
-      - name: 🧪 Test
-        run: "python -m pytest ./test"
+          make publish -e PYPI_USERNAME=$PYPI_USERNAME -e PYPI_PASSWORD=$PYPI_PASSWORD -e PYPI_TEST_PASSWORD=$PYPI_TEST_PASSWORD
