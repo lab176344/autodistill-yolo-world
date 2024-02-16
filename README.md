@@ -58,4 +58,4 @@ The code in this repository is licensed under an [Apache 2.0 license](LICENSE).
 
 ## 🏆 Thanks
 
-Thanks to [autodistill]((https://github.com/autodistill/autodistill)) and [ultralytics](https://github.com/ultralytics)
+Thanks to [autodistill]((https://github.com/autodistill/autodistill) and [ultralytics](https://github.com/ultralytics)
