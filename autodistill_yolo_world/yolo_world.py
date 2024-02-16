@@ -19,6 +19,7 @@ class YoloWorld(DetectionBaseModel):
     def __init__(self, ontology: CaptionOntology, model_type: str = "yolov8s-world.pt"):
         self.ontology = ontology
         self.model = YOLOWorld(model_type)
+        self.model.to(DEVICE)
         labels = self.ontology.prompts()
         self.model.set_classes(labels)
 
